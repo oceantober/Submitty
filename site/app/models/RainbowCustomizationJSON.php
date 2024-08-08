@@ -26,6 +26,7 @@ class RainbowCustomizationJSON extends AbstractModel {
     private $display = [];
     private $benchmark_percent;         // Init in constructor
     private object $final_cutoff;       // Init in constructor
+    private object $min_grade;           // Init in constructor
     private $gradeables = [];
     /**
      * @var object[]
@@ -65,6 +66,7 @@ class RainbowCustomizationJSON extends AbstractModel {
         $this->section = (object) [];
         $this->benchmark_percent = (object) [];
         $this->final_cutoff = (object) [];
+        $this->min_grade = (object) [];
     }
 
     /**
@@ -119,6 +121,15 @@ class RainbowCustomizationJSON extends AbstractModel {
      */
     public function getFinalCutoff() {
         return $this->final_cutoff;
+    }
+
+    /**
+     * Gets the min grade object
+     *
+     * @return object The min grade object
+     */
+    public function getMinGrade() {
+        return $this->min_grade;
     }
 
     /**
@@ -214,6 +225,10 @@ class RainbowCustomizationJSON extends AbstractModel {
             $this->final_cutoff = $json->final_cutoff;
         }
 
+        if (isset($json->min_grade)) {
+            $this->min_grade = $json->min_grade;
+        }
+
         if (isset($json->gradeables)) {
             $this->gradeables = $json->gradeables;
         }
@@ -284,6 +299,19 @@ class RainbowCustomizationJSON extends AbstractModel {
         $final_cutoff_array = (array) $this->final_cutoff;
         $final_cutoff_array[$cutoff] = $percent;
         $this->final_cutoff = (object) $final_cutoff_array;
+    }
+
+    /**
+     * Add a min grade to a category
+     *
+     * @param string $category The cutoff - this is the key for this json field
+     * @param float $percent The percent - this is the value for this json field
+     */
+    public function addMinGrade(string $category, float $percent): void {
+        // To satisfy php-lint, add the pair to an array, then cast the array back to an object
+        $min_grade_array = (array) $this->min_grade;
+        $min_grade_array[$category] = $percent;
+        $this->min_grade = (object) $min_grade_array;
     }
 
     /**

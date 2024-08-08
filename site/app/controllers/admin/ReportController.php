@@ -674,6 +674,8 @@ class ReportController extends AbstractController {
                 'final_cutoff_input_fields' => ["A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D"],
                 'allowed_grades' => ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'F'],
                 'final_cutoff' => (array) $customization->getFinalCutoff(),
+                'min_grade' => (array) $customization->getMinGrade(),
+                'min_grade_input_fields' => ['homework', 'test', 'lab'],
                 'display' => $customization->getDisplay(),
                 'display_description' => $customization->getDisplayDescription(),
                 'sections_and_labels' => (array) $customization->getSectionsAndLabels(),

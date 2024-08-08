@@ -433,6 +433,29 @@ class RainbowCustomization extends AbstractModel {
     }
 
     /**
+     * Configure Minimum Grade Required for Each Syllabus Bucket
+     *
+     * @return object An object which maps syllabus buckets to the minimum grade required to pass
+     */
+    public function getMinGrade() {
+        if (!is_null($this->RCJSON)) {
+            $percent_obj = $this->RCJSON->getMinGrade();
+
+            // If the RCJSON was found and it contains the minimum grade percent fields then return it
+            if ($percent_obj !== (object) []) {
+                return $percent_obj;
+            }
+        }
+
+        // Otherwise return a default minimum grade percent object
+        return (object) [
+                'homework' => 60.0,
+                'test' => 55.0,
+                'lab' => 66.0,
+            ];
+    }
+
+    /**
      * Get display options
      *
      * Get a multidimensional array that contains not only a list of usable display options but also which ones
@@ -571,6 +594,12 @@ class RainbowCustomization extends AbstractModel {
         if (isset($form_json->final_cutoff)) {
             foreach ($form_json->final_cutoff as $key => $value) {
                 $this->RCJSON->addFinalCutoff((string) $key, $value);
+            }
+        }
+
+        if (isset($form_json->min_grade)) {
+            foreach ($form_json->min_grade as $key => $value) {
+                $this->RCJSON->addMinGrade((string) $key, $value);
             }
         }
 

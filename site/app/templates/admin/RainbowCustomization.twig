@@ -328,8 +328,16 @@ To remove a curve simply blank all boxes."></i>
                 <h2>Minimum Grade Required Per Syllabus Category</h2>
                 <p class="rg_info_message">You may adjust the minimum percent required to receive certain final letter grades for syllabus category. Enter this percentage as a decimal number out of 100.<br />As an example 90% would be entered as 90.0</p>
                 <div class="input-boxes">
-                    <label for="homework" style="margin-right: 10px;">Homework:</label>
-                    <input type="text" id="homework" name="homework">
+                    {% for min_grade_input in min_grade_input_fields %}
+                        {% if min_grade[min_grade_input] is defined %}
+                            {% set percent = min_grade[min_grade_input] %}
+                        {% else %}
+                            {% set percent = '' %}
+                        {% endif %}
+
+                        <label for="min_grade_{{ min_grade_input }}" class="{{ min_grade_input }} input-label">{{ min_grade_input }}</label>
+                        <input type="text" id="min_grade_{{ min_grade_input }}" class="min_grade_input {{ min_grade_input }}" name="min_grade" data-benchmark="{{ min_grade_input }}" value="{{ percent }}">
+                    {% endfor %}
                 </div>
             </div>
             <div id="manual-grading" class="customization_item">
